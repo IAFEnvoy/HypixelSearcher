@@ -1,0 +1,31 @@
+{
+    "schemaVersion": 1,
+    "id": "hypsearcher",
+    "version": "${version}",
+
+    "name": "Example Mod",
+    "description": "This is an example description! Tell everyone what your mod is about!",
+    "authors": [
+        "Me!"
+    ],
+
+    "license": "CC0-1.0",
+    "icon": "assets/modid/icon.png",
+
+    "environment": "*",
+    "entrypoints": {
+        "client": [
+            "hypsearcher.Client"
+        ]
+    },
+
+    "depends": {
+        "fabricloader": ">=0.11.3",
+        "fabric": "*",
+        "minecraft": "1.16.x",
+        "java": ">=8"
+    },
+    "suggests": {
+        "another-mod": "*"
+    }
+}
