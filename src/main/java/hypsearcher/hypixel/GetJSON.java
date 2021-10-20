@@ -14,8 +14,8 @@ import net.minecraft.text.Text;
 import hypsearcher.hypixel.Info.*;
 
 public class GetJSON {
-    public static String APIKEY = "a349c3cb-8613-4c04-9b10-565b602fa30b";
-    public static String BASEURL = "https://api.hypixel.net";
+    public static final String APIKEY = "a349c3cb-8613-4c04-9b10-565b602fa30b";
+    public static final String BASEURL = "https://api.hypixel.net";
 
     public static String getURL(String location, String... args) {
         String url = BASEURL + location + "?";
@@ -29,7 +29,7 @@ public class GetJSON {
 
     public static void overview(String playername, PlayerEntity message, int key) {
         String uuid = GetUUID.getUUID(playername);
-        if (uuid.isBlank()) {
+        if (uuid.equals("")) {
             System.out.println("玩家不存在");
             return;
         }
@@ -67,21 +67,27 @@ public class GetJSON {
                     JsonObject player = (JsonObject) jsons.get("player");
                     JsonObject stats = (JsonObject) player.get("stats");
                     JsonObject bedwars = (JsonObject) stats.get("Bedwars");
-                    output = BedwarInfo.getBedwar(bedwars, RootInfo.getRank(player) + playername);
+                    output = BedwarInfo.getBedwar(bedwars, RootInfo.getRank(player) + playername + "§f");
                     break;
                 }
                 case 2: {
                     JsonObject player = (JsonObject) jsons.get("player");
                     JsonObject stats = (JsonObject) player.get("stats");
                     JsonObject skywars = (JsonObject) stats.get("SkyWars");
-                    output = SkywarInfo.getSkywar(skywars, RootInfo.getRank(player) + playername);
+                    output = SkywarInfo.getSkywar(skywars, RootInfo.getRank(player) + playername + "§f");
                     break;
                 }
                 case 3: {
                     JsonObject player = (JsonObject) jsons.get("player");
                     JsonObject stats = (JsonObject) player.get("stats");
                     JsonObject buildBattle = (JsonObject) stats.get("BuildBattle");
-                    output = BuildBattleInfo.getBuildBattle(buildBattle, RootInfo.getRank(player) + playername);
+                    output = BuildBattleInfo.getBuildBattle(buildBattle, RootInfo.getRank(player) + playername + "§f");
+                    break;
+                }
+                case 4: {
+                    JsonObject player = (JsonObject) jsons.get("player");
+                    JsonObject stats = (JsonObject) player.get("stats");
+                    output = CoinInfo.getCoinInfo(stats, RootInfo.getRank(player) + playername + "§f");
                     break;
                 }
                 default:
@@ -93,7 +99,8 @@ public class GetJSON {
         }
         if (message != null)
             message.sendMessage(Text.of(output), false);
-        else System.out.println(output);
+        else
+            System.out.println(output);
     }
 
 }

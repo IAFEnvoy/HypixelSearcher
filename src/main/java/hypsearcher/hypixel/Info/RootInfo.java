@@ -1,6 +1,9 @@
 package hypsearcher.hypixel.Info;
 
 import com.google.gson.JsonObject;
+
+import hypsearcher.hypixel.Util.GetData;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,23 +18,23 @@ public class RootInfo {
         if (rank != null)
             switch (rank) {
                 case "VIP": {
-                    rank = "[VIP]";
+                    rank = "§2[VIP]";
                     break;
                 }
                 case "VIP_PLUS": {
-                    rank = "[VIP+]";
+                    rank = "§2[VIP+]";
                     break;
                 }
                 case "MVP": {
-                    rank = "[MVP]";
+                    rank = "§b[MVP]";
                     break;
                 }
                 case "MVP_PLUS": {
-                    rank = "[MVP+]";
+                    rank = "§b[MVP+]";
                     break;
                 }
                 case "MVP_PLUS_PLUS": {
-                    rank = "[MVP++]";
+                    rank = "§6[MVP++]";
                     break;
                 }
             }
@@ -49,26 +52,6 @@ public class RootInfo {
             }
         }
         return level;
-    }
-
-    public static int getKarma(JsonObject player) {// 获取人品值
-        int karma = 0;
-        try {
-            karma = player.get("karma").getAsInt();
-        } catch (Exception e) {
-            return -1;
-        }
-        return karma;
-    }
-
-    public static int getAchievementPoints(JsonObject player) {// 获取成就点数
-        int achievementPoints = 0;
-        try {
-            achievementPoints = player.get("achievementPoints").getAsInt();
-        } catch (Exception e) {
-            return -1;
-        }
-        return achievementPoints;
     }
 
     public static int getGameWin(JsonObject player) {// 获取游戏总胜场
@@ -139,27 +122,21 @@ public class RootInfo {
         Date date = new Date(time);
         return sf.format(date);
     }
-    public static String getLastGame(JsonObject player) {
-        String mostRecentGameType = "";
-        try {
-            mostRecentGameType = player.get("mostRecentGameType").getAsString();
-        } catch (Exception e) {
-            return "ERROR";
-        }
-        return mostRecentGameType;
-    }
-    public static String getRoot(JsonObject player,String playername){
+
+    public static String getRoot(JsonObject player, String playername) {
         String output = "\n";
-        output += RootInfo.getRank(player) + playername + "的Hypixel信息\n";
-        output += "等级：" + RootInfo.getLevel(player) + " | 人品值：" + RootInfo.getKarma(player) + "\n";
-        output += "成就点数：" + RootInfo.getAchievementPoints(player) + " | 小游戏胜场：" + RootInfo.getGameWin(player) + "\n";
+        output += RootInfo.getRank(player) + playername + "§f的Hypixel信息\n";
+        output += "等级：" + RootInfo.getLevel(player) + " | 人品值：" + String.valueOf(GetData.getKeyInt(player, "karma"))
+                + "\n";
+        output += "成就点数：" + String.valueOf(GetData.getKeyInt(player, "achievementPoints")) + " | 小游戏胜场："
+                + RootInfo.getGameWin(player) + "\n";
         output += "完成任务：" + RootInfo.getTaskComplete(player) + " | 完成挑战：" + RootInfo.getChallengeComplete(player)
                 + "\n";
         output += "获得硬币：" + RootInfo.getCoin(player) + "\n";
         output += "首次登录：" + RootInfo.getTime(player, 0) + "\n";
         output += "上次登录：" + RootInfo.getTime(player, 1) + "\n";
         output += "上次退出：" + RootInfo.getTime(player, 2) + "\n";
-        output += "最后游玩：" + RootInfo.getLastGame(player) + "\n";
+        output += "最后游玩：" + GetData.getKeyString(player, "mostRecentGameType") + "\n";
         return output;
     }
 }

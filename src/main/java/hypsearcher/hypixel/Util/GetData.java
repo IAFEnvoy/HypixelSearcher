@@ -8,7 +8,7 @@ public class GetData {
         try {
             data = object.get(key).getAsInt();
         } catch (Exception e) {
-            return -1;
+            return 0;
         }
         return data;
     }
@@ -19,6 +19,16 @@ public class GetData {
             data = object.get(key).getAsString();
         } catch (Exception e) {
             return "ERROR";
+        }
+        return data;
+    }
+
+    public static boolean getKeyBoolean(JsonObject object, String key) {
+        boolean data = false;
+        try {
+            data = object.get(key).getAsBoolean();
+        } catch (Exception e) {
+            return false;
         }
         return data;
     }
